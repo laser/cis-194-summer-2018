@@ -4,19 +4,12 @@ A slightly modified version of UPenn's CIS 194 course, with tests!
 
 ## Contributors
 
-This test suite and lesson plan has been built out over the years with help from (but not limited to):
-
-- [acruikshank](http://github.com/acruikshank)
-- [aztecrex](http://github.com/aztecrex)
-- [clkunzang](http://github.com/clkunzang)
-- [coopernurse](http://github.com/coopernurse)
-- [finalfantasia](http://github.com/finalfantasia)
-- [jxv](http://github.com/jxv)
-- [laser](http://github.com/laser)
-- [lexi-lambda](http://github.com/lexi-lambda)
-- [markw](http://github.com/markw)
-- [michaelavila](http://github.com/michaelavila)
-- [will-wow](http://github.com/will-wow)
+This test suite and lesson plan has been built out over the years with help from (but not limited to): [acruikshank](http://github.com/acruikshank), [aztecrex](http://github.com/aztecrex), 
+[clkunzang](http://github.com/clkunzang), [coopernurse](http://github.com/coopernurse), 
+[finalfantasia](http://github.com/finalfantasia), [jxv](http://github.com/jxv), 
+[laser](http://github.com/laser), [lexi-lambda](http://github.com/lexi-lambda), 
+[markw](http://github.com/markw), [michaelavila](http://github.com/michaelavila), and
+[will-wow](http://github.com/will-wow).
 
 ## Schedule
 
