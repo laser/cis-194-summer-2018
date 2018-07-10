@@ -52,6 +52,18 @@ Week | Lecture                                                | Assignment Due  
   [29]: https://github.com/laser/cis-194-summer-2018/blob/master/pdfs/assignments/Week10A-applicative-cont.pdf
   [30]: https://github.com/laser/cis-194-summer-2018/blob/master/pdfs/assignments/Week11A-monads.pdf
   [31]: https://github.com/laser/cis-194-summer-2018/blob/master/pdfs/assignments/Week12A-quickcheck.pdf
+  
+## Member Presentations
+
+Some presentations relevant to the course from years gone past:
+
+- [Ben Deane - Diagrams](https://github.com/elbeno/diagrams-presentation)
+- [Ben Deane - Parametric Polymorphism](http://sm-haskell-users-group.github.io/pdfs/Ben%20Deane%20-%20Parametric%20Polymorphism.pdf)
+- [Brian Russell - Type Classes](http://sm-haskell-users-group.github.io/pdfs/Brian%20Russell%20-%20Type%20Classes.pdf)
+- [Erin Swenson-Healey - Lazy Evaluation](https://docs.google.com/presentation/d/1kifDk8fmnqRf3-bfpl2tv-Ah6qQsk6fWK6s-bXDw9rg/edit?usp=sharing)
+- [Henri Sharouz - Functors and Applicatives](https://docs.google.com/presentation/d/1UkhmFMdtnLipPAeL25UyGrKI9AWidELz_G2IxFQOoZQ/edit?usp=sharing)
+- [Phil Freeman - Monads](https://github.com/paf31/haskell-slides/blob/master/monads/README.md)
+- [Phil Freeman - Monoids and IO](https://github.com/paf31/haskell-slides/tree/master/monoids)
 
 ## Getting Started
 
