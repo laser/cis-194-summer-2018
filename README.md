@@ -19,8 +19,8 @@ Week | Lecture                                                | Assignment Due  
 2    | [Algebraic Data Types][2]                              | [log parsing][22]       |         |                                   |
 3    | [Recursion patterns, polymorphism, and the Prelude][3] | [code golf][23]         |         |                                   |
 4    | [Parametric Polymorphism][4]                           | [BST, recursion][24]    |         |                                   |
-5    | [More polymorphism and type classes][5]                | [calculator][25]        |         |                                   |
-6    | [Lazy evaluation][6]                                   | [streams][26]           |         |                                   |
+5    | [More polymorphism and type classes][5]                | [calculator][25]        |         | ESH                                  |
+6    | [Lazy evaluation][6]                                   | [streams][26]           |         | ESH                                   |
 7    | [Monoids][7]                                           | [monoids][27]           |         |                                   |
 8    | [Functors][8] [Applicative functors (part 1)][9]       | [parsers, part one][28] |         |                                   |
 9    | [Applicative functors (part 2)][10]                    | [parsers, part two][29] |         |                                   |
