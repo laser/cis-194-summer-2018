@@ -15,8 +15,8 @@ This test suite and lesson plan has been built out over the years with help from
 
 Week | Lecture                                                | Assignment Due          | Due     | Presenter                         |
 ---- | ------------------------------------------------------ | ----------------------- | ------- | --------------------------------- |
-1    | [Introduction to Haskell][1]                           | [cc numbers, hanoi][21] | 7/17        |                                   |
-2    | [Algebraic Data Types][2]                              | [log parsing][22]       | 7/31        |                                   |
+1    | [Introduction to Haskell][1]                           | [cc numbers, hanoi][21] | 7/17        | Prakash presents on 7/10                                 |
+2    | [Algebraic Data Types][2]                              | [log parsing][22]       | 7/31        | Prakash presents on 7/17                                  |
 3    | [Recursion patterns, polymorphism, and the Prelude][3] | [code golf][23]         | 8/14        |                                   |
 4    | [Parametric Polymorphism][4]                           | [BST, recursion][24]    | 8/28        |                                   |
 5    | [More polymorphism and type classes][5]                | [calculator][25]        | 9/10        | Erin presents on 8/28                                |
