@@ -15,13 +15,11 @@ import Homework.Week02.Log
 
 -- #1a
 parseMessage :: String -> LogMessage
-parseMessage line = fold (words line) LogMessage
-  where fold ("I":xs) msgCtr = fold' xs (msgCtr Info)
-        fold ("E":code:xs) msgCtr = fold' xs (msgCtr (Error (readCode code)))
-        fold rest _ = Unknown (unwords rest)
-        fold' (timestamp:xs) msgCtr = fold'' xs (msgCtr (readCode timestamp))
-        fold'' rest msgCtr = msgCtr (unwords rest)
-        readCode code = read code::Int
+parseMessage line = parseMessage' (words line)
+  where parseMessage' ("I":timestamp:rest) = LogMessage Info (readInt timestamp) (unwords rest)
+        parseMessage' ("E":code:timestamp:rest) = LogMessage (Error (readInt code)) (readInt timestamp) (unwords rest)
+        parseMessage' rest = Unknown (unwords rest)
+        readInt a = read a :: Int
 
 -- #1b
 parse :: String -> [LogMessage]

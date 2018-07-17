@@ -24,7 +24,6 @@ spec = do
 
   describe "parse" $ do
     it "should take a multi-line string and parse out the LogMessages" $ do
-      pending
       let fakeLogFile = "E 2 562 help help \nI 2 hello ma"
       parse fakeLogFile `shouldBe` [LogMessage (Error 2) 562 "help help", LogMessage Info 2 "hello ma"]
 
