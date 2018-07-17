@@ -15,18 +15,18 @@ This test suite and lesson plan has been built out over the years with help from
 
 Week | Lecture                                                | Assignment Due          | Due     | Presenter                         |
 ---- | ------------------------------------------------------ | ----------------------- | ------- | --------------------------------- |
-1    | [Introduction to Haskell][1]                           | [cc numbers, hanoi][21] |         |                                   |
-2    | [Algebraic Data Types][2]                              | [log parsing][22]       |         |                                   |
-3    | [Recursion patterns, polymorphism, and the Prelude][3] | [code golf][23]         |         |                                   |
-4    | [Parametric Polymorphism][4]                           | [BST, recursion][24]    |         |                                   |
-5    | [More polymorphism and type classes][5]                | [calculator][25]        |         | ESH                                  |
-6    | [Lazy evaluation][6]                                   | [streams][26]           |         | ESH                                   |
-7    | [Monoids][7]                                           | [monoids][27]           |         |                                   |
-8    | [Functors][8] [Applicative functors (part 1)][9]       | [parsers, part one][28] |         |                                   |
-9    | [Applicative functors (part 2)][10]                    | [parsers, part two][29] |         |                                   |
-10   | [Property-based Testing w/QuickCheck][12]              | [testing][31]           |         |                                   |
-11   | [Monads][11]                                           | [risk][30]              |         |                                   |
-12   | Lenses                                                 | lenses                  |         |                                   |
+1    | [Introduction to Haskell][1]                           | [cc numbers, hanoi][21] | 7/17        |                                   |
+2    | [Algebraic Data Types][2]                              | [log parsing][22]       | 7/31        |                                   |
+3    | [Recursion patterns, polymorphism, and the Prelude][3] | [code golf][23]         | 8/14        |                                   |
+4    | [Parametric Polymorphism][4]                           | [BST, recursion][24]    | 8/28        |                                   |
+5    | [More polymorphism and type classes][5]                | [calculator][25]        | 9/10        | Erin presents on 8/28                                |
+6    | [Lazy evaluation][6]                                   | [streams][26]           | 9/24        | Erin presents on 9/10                                  |
+7    | [Monoids][7]                                           | [monoids][27]           | ...        |                                   |
+8    | [Functors][8] [Applicative functors (part 1)][9]       | [parsers, part one][28] | ...        |                                   |
+9    | [Applicative functors (part 2)][10]                    | [parsers, part two][29] | ...     |                                   |
+10   | [Property-based Testing w/QuickCheck][12]              | [testing][31]           | ...     |                                   |
+11   | [Monads][11]                                           | [risk][30]              | ...     |                                   |
+12   | Lenses                                                 | lenses                  | ...     |                                   |
 
   [1]: https://github.com/laser/cis-194-summer-2018/blob/master/pdfs/lectures/Week01L-intro.pdf
   [2]: https://github.com/laser/cis-194-summer-2018/blob/master/pdfs/lectures/Week02L-ADTs.pdf
