@@ -14,15 +14,12 @@ spec :: Spec
 spec = do
   describe "LogAnalysis" $ do
     it "should parse error lines" $ do
-      pending
       parseMessage "E 2 562 help help" `shouldBe` LogMessage (Error 2) 562 "help help"
 
     it "should parse info lines" $ do
-      pending
       parseMessage "I 29 la la la" `shouldBe` LogMessage Info 29 "la la la"
 
     it "should parse unknown lines" $ do
-      pending
       parseMessage "This is not in the right format" `shouldBe`  Unknown "This is not in the right format"
 
   describe "parse" $ do

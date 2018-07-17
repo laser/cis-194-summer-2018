@@ -15,11 +15,17 @@ import Homework.Week02.Log
 
 -- #1a
 parseMessage :: String -> LogMessage
-parseMessage = undefined
+parseMessage line = fold (words line) LogMessage
+  where fold ("I":xs) msgCtr = fold' xs (msgCtr Info)
+        fold ("E":code:xs) msgCtr = fold' xs (msgCtr (Error (readCode code)))
+        fold rest _ = Unknown (unwords rest)
+        fold' (timestamp:xs) msgCtr = fold'' xs (msgCtr (readCode timestamp))
+        fold'' rest msgCtr = msgCtr (unwords rest)
+        readCode code = read code::Int
 
 -- #1b
 parse :: String -> [LogMessage]
-parse = undefined
+parse multilines = map parseMessage (lines multilines)
 
 -- #2
 insert :: LogMessage -> MessageTree -> MessageTree
