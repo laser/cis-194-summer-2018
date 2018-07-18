@@ -1,24 +1,29 @@
 module Homework.Week01.Assignment where
 
+import Data.Char
+import Data.List
+
 -- #1a
 toDigits :: Integer -> [Integer]
-toDigits = undefined
+toDigits x
+    | x <= 0    = []
+    | otherwise = map (toInteger . digitToInt) . show $ x
 
 -- #1b
 toDigitsRev :: Integer -> [Integer]
-toDigitsRev = undefined
+toDigitsRev = reverse . toDigits
 
 -- #2
 doubleEveryOther :: [Integer] -> [Integer]
-doubleEveryOther = undefined
+doubleEveryOther = reverse . zipWith ($) (cycle [id, (*2)]) . reverse
 
 -- #3
 sumDigits :: [Integer] -> Integer
-sumDigits = undefined
+sumDigits = foldl' (+) 0 . concatMap toDigits
 
 -- #4
 validate :: Integer -> Bool
-validate = undefined
+validate x = sum (concatMap toDigits $ doubleEveryOther $ toDigits x) `rem` 10 == 0
 
 -- #5
 type Peg = String
