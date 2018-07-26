@@ -30,7 +30,8 @@ sumDigits (x:xs) = sum' (toDigits x) + sumDigits xs
 
 -- #4
 validate :: Integer -> Bool
-validate n = 0 == sumDigits (doubleEveryOther (toDigits n)) `mod` 10
+validate n = test == 0
+    where test = sumDigits (doubleEveryOther (toDigits n)) `mod` 10
 
 -- #5
 type Peg = String
