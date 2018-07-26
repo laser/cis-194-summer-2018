@@ -16,9 +16,6 @@ toDigitsRev a
     | otherwise = []
 
 -- #2
--- doubleEveryOther :: [Integer] -> [Integer]
--- doubleEveryOther xs = snd $ foldr (\x (term, acc) ->
---   ((if term == 2 then 1 else 2), ((x * term) : acc))) (1, []) xs
 doubleEveryOther :: [Integer] -> [Integer]
 doubleEveryOther xs = snd $ foldr (\el (counter, acc) -> (counter + 1, (transform counter el) : acc)) (1, []) xs
     where transform c e = if even c then 2 * e else e
