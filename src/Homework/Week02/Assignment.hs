@@ -68,5 +68,6 @@ whatWentWrong messages = map sf $ sortByTimestamp $ over50 $ errorMessages
         sf (LogMessage _ _ s) = s
 
 getErrorMessages :: [LogMessage] -> [LogMessage]
-getErrorMessages messages = filter (\x -> case x of LogMessage (Error _) _ _ -> True
+getErrorMessages messages = filter (\x -> case x of Unknown _ -> False
+                                                    LogMessage (Error _) _ _ -> True
                                                     LogMessage _ _ _ -> False) messages
