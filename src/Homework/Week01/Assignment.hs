@@ -16,18 +16,24 @@ toDigitsRev a
     | otherwise = []
 
 -- #2
+-- doubleEveryOther :: [Integer] -> [Integer]
+-- doubleEveryOther xs = snd $ foldr (\x (term, acc) ->
+--   ((if term == 2 then 1 else 2), ((x * term) : acc))) (1, []) xs
 doubleEveryOther :: [Integer] -> [Integer]
-doubleEveryOther [] = []
-doubleEveryOther (x:(y:ys)) = x : (y * 2) : doubleEveryOther ys
+doubleEveryOther xs = snd $ foldr (\el (counter, acc) -> (counter + 1, (transform counter el) : acc)) (1, []) xs
+    where transform c e = if even c then 2 * e else e
+
 
 -- #3
 sumDigits :: [Integer] -> Integer
 sumDigits [] = 0
-sumDigits (x:xs) = x + sumDigits xs
+sumDigits (x:xs) = sum' (toDigits x) + sumDigits xs
+    where   sum' [] = 0
+            sum' (y:ys) = y + sum' ys
 
 -- #4
 validate :: Integer -> Bool
-validate = undefined
+validate n = 0 == sumDigits (doubleEveryOther (toDigits n)) `mod` 10
 
 -- #5
 type Peg = String
