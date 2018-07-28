@@ -20,26 +20,26 @@ module Homework.Week04.Assignment (
 ) where
 
 import Homework.Week04.BST
-
+import Data.Char
 -- #1
 ex1 :: a -> b -> b
-ex1 = undefined
+ex1 a b = b
 
 -- #2
 ex2 :: a -> a -> a
-ex2 = undefined
+ex2 a b = a
 
 -- #3
 ex3 :: Int -> a -> a
-ex3 = undefined
+ex3 i a = a
 
 -- #4
 ex4 :: Bool -> a -> a -> a
-ex4 = undefined
+ex4 bool a a' = a
 
 -- #5
 ex5 :: Bool -> Bool
-ex5 = undefined
+ex5 a = a
 
 -- #6
 ex6 :: (a -> a) -> a
@@ -47,44 +47,63 @@ ex6 = undefined
 
 -- #7
 ex7 :: (a -> a) -> a -> a
-ex7 = undefined
+ex7 = id
 
 -- #8
 ex8 :: [a] -> [a]
-ex8 = undefined
+ex8 = id
 
 -- #9
 ex9 :: (a -> b) -> [a] -> [b]
-ex9 = undefined
+ex9 = fmap
 
 -- #10
 ex10 :: Maybe a -> a
-ex10 = undefined
+ex10 (Just a) = a
 
 -- #11
 ex11 :: a -> Maybe a
-ex11 = undefined
+ex11 = Just
 
 -- #12
 ex12 :: Maybe a -> Maybe a
-ex12 = undefined
+ex12 a = a
 
 -- #13
 insertBST :: (a -> a -> Ordering) -> a -> BST a -> BST a
-insertBST = undefined
+insertBST f a Leaf = Node (Leaf) a (Leaf)
+insertBST f a (Node l b r) =
+    case f a b of
+        GT -> Node l b (insertBST f a r)
+        otherwise -> Node (insertBST f a l) b r
+        
 
 -- #14
 allCaps :: [String] -> Bool
-allCaps = undefined
+allCaps xs = all (\x -> x == True) $ map allCaps' xs
 
--- #15
+allCaps' :: String -> Bool
+allCaps' [] = False
+allCaps' (x:xs) = toUpper x == x
+
 dropTrailingWhitespace :: String -> String
-dropTrailingWhitespace = undefined
+dropTrailingWhitespace [] = []
+dropTrailingWhitespace xs = go (reverse xs) 
+    where go (y:ys) =
+            case y == ' ' of
+                    True -> go ys
+                    False -> reverse (y:ys)
 
 -- #16
 firstLetters :: [String] -> [Char]
-firstLetters = undefined
+firstLetters = f . g
+    where f = foldr (++) "" 
+          g = sequence . filter (\x -> x /= Nothing) . map safeHead
+
+safeHead :: [a] -> Maybe a
+safeHead [] = Nothing
+safeHead (x:xs) = Just x
 
 -- #17
 asList :: [String] -> String
-asList = undefined
+asList = filter (\x -> x /= '"') . show . filter (\x -> x /= "")
