@@ -18,11 +18,59 @@ import Data.List (dropWhileEnd)
 
 -- #1a
 
+newtype Parser a = P (String -> [(a, String)])
+
+parse' :: Parser a -> String -> [(a, String)]
+parse' (P p) inp = p inp
+
+instance Functor Parser where
+    fmap f p = 
+        P (\x -> case parse' p x of
+            [] -> []
+            [(val, rem)] -> [(f val, rem)])
+
+instance Applicative Parser where
+    pure v = P (\x -> [(v, x)])
+    pg <*> px = P (\x -> case parse' pg x of
+        [] -> []
+        [(g, out)] -> parse' (fmap g px) out)
+
 stripl :: String -> String
 stripl [] = []
 stripl (x:xs) = case x == ' ' of
     True -> stripl xs
     False -> (x:xs)
+
+parseChar :: Parser Char
+parseChar = P (\str -> 
+    case str of
+        [] -> []
+        (x:xs) -> [(x, xs)])
+
+parseWord :: Parser String
+parseWord = P word
+
+word :: String -> [(String, String)]
+word zs = go (stripl zs) "" 
+    where go [] ys = [(ys, [])]
+          go (' ':xs) ys = [(ys, xs)]
+          go (x:xs) ys = go xs (ys++[x])
+
+parseRem :: Parser String
+parseRem = pure stripl <*> P (\str -> [(str, [])])
+
+parseInt' :: Parser Int
+parseInt' = pure read <*> parseWord
+
+parseMsg  :: Parser MessageType
+parseMsg = pure f <*> parseChar
+    where f 'I' = Info
+          f 'W' = Warning
+          --f 'E' = Error
+
+parseLogMessage :: Parser LogMessage
+parseLogMessage = pure f <*> parseMsg <*> parseInt' <*> parseRem
+    where f x y z = LogMessage x y z
 
 stripr = dropWhileEnd isSpace
 
