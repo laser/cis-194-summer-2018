@@ -35,6 +35,10 @@ instance Applicative Parser where
         [] -> []
         [(g, out)] -> parse' (fmap g px) out)
 
+instance Monad Parser where
+    return = undefined
+    (>>=) = undefined
+
 stripl :: String -> String
 stripl [] = []
 stripl (x:xs) = case x == ' ' of
@@ -69,7 +73,7 @@ parseMsg = pure f <*> parseChar
           --f 'E' = Error
 
 parseLogMessage :: Parser LogMessage
-parseLogMessage = pure f <*> parseMsg <*> parseInt' <*> parseRem
+parseLogMessage = f <$> parseMsg <*> parseInt' <*> parseRem
     where f x y z = LogMessage x y z
 
 stripr = dropWhileEnd isSpace
