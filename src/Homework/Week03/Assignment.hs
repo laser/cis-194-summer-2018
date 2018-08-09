@@ -6,11 +6,14 @@ module Homework.Week03.Assignment (
 
 -- #1
 skips :: [a] -> [[a]]
-skips = undefined
+skips xs = map ($ xs) $ (map takeEvery [1..(length xs)])
+  where takeEvery _ [] = []
+        takeEvery n xs  | n >= length xs = []
+                        | otherwise = head (drop n xs) : takeEvery n (tail $ drop n xs)
 
 -- #2
 localMaxima :: [Integer] -> [Integer]
-localMaxima = undefined
+localMaxima xs = map (\(_, y, _) -> y) $ filter (\(x, y, z) -> y > x && y > z) $ (zip3 xs (drop 1 xs) (drop 2 xs))
 
 -- #3
 histogram :: [Integer] -> String
