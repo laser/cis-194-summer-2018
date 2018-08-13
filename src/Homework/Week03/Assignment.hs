@@ -4,6 +4,9 @@ module Homework.Week03.Assignment (
   histogram
 ) where
 
+import Data.List
+import Data.Function
+
 -- #1
 skips :: [a] -> [[a]]
 skips [] = []
@@ -17,4 +20,7 @@ localMaxima xs = map (\(_, y, _) -> y) $ filter (\(x, y, z) -> y > x && y > z) $
 
 -- #3
 histogram :: [Integer] -> String
-histogram = undefined
+histogram = chart $ transpose $ mapToStrings $ fillGaps [0..9] $ map (\x -> (length x, head x)) $ group . sort
+  where fillGaps set ls = undefined -- [(Int, Int)]
+        mapToStrings ls = undefined -- [String]
+        chart ls = undefined -- String
