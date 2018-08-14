@@ -14,20 +14,16 @@ spec :: Spec
 spec = do
   describe "LogAnalysis" $ do
     it "should parse error lines" $ do
-      pending
       parseMessage "E 2 562 help help" `shouldBe` LogMessage (Error 2) 562 "help help"
 
     it "should parse info lines" $ do
-      pending
       parseMessage "I 29 la la la" `shouldBe` LogMessage Info 29 "la la la"
 
     it "should parse unknown lines" $ do
-      pending
       parseMessage "This is not in the right format" `shouldBe`  Unknown "This is not in the right format"
 
   describe "parse" $ do
     it "should take a multi-line string and parse out the LogMessages" $ do
-      pending
       let fakeLogFile = "E 2 562 help help \nI 2 hello ma"
       parse fakeLogFile `shouldBe` [LogMessage (Error 2) 562 "help help", LogMessage Info 2 "hello ma"]
 
