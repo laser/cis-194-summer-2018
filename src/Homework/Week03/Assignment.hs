@@ -11,8 +11,7 @@ import Data.Char
 skips :: [a] -> [[a]]
 skips [] = []
 skips xs = map ($ xs) $ (map takeEvery [1..(length xs)])
-  where takeEvery _ [] = []
-        takeEvery n xs  | n > length xs = [] | otherwise = head (drop (n-1) xs) : takeEvery n (tail $ drop (n-1) xs)
+  where takeEvery _ [] = []; takeEvery n xs  | n > length xs = [] | otherwise = head (drop (n-1) xs) : takeEvery n (tail $ drop (n-1) xs)
 
 -- #2
 localMaxima :: [Integer] -> [Integer]
