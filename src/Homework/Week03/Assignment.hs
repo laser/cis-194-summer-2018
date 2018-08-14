@@ -28,3 +28,14 @@ histogram xs = chart $ filter (not . empty) $ transpose $ mapToStrings $ normali
         mapToStrings ls = map (\x -> unwords $ replicate (10 - (fst x)) " " ++ replicate (fst x) "*") ls
         empty = null . (dropWhile isSpace)
         chart ls = unlines (ls ++ ["==========", "0123456789"]) -- String
+
+----- JUST FOR FUN
+takeEverySeq :: [a] -> [[a]]
+takeEverySeq xs = takeEverySeq' 0 xs
+  where takeEverySeq' n xs | n >= length xs = [] | otherwise = takeEvery n xs : takeEverySeq' (n+1) xs
+
+takeEvery :: Int -> [a] -> [a]
+takeEvery _ [] = []
+takeEvery n xs 
+  | n >= length xs = [] 
+  | otherwise = head (drop n xs) : takeEvery n (tail $ drop n xs)
