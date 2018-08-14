@@ -1,5 +1,5 @@
 module Homework.Week03.Assignment (
-  skips,
+  --skips,
   localMaxima,
   histogram
 ) where
@@ -9,10 +9,25 @@ import Data.List
 -- #1
 skips :: [a] -> [[a]]
 skips [] = []
-skips [x] = [x] : []
-skips x = x : []
-skips all@(x:xs) = (x : []) : [] 
+skips x = x : skips' 2 x
 
+skips' :: Int -> [a] -> [[a]]
+skips' 0 x = [x]
+skips' _ [] = []
+skips' n x = if n > length x then [] else (takeEnd $ noEnds $ splitAt' n x) : (skips' (n + 1) x) 
+
+splitAt' :: Int -> [a] -> [[a]]
+splitAt' 0 _ = []
+splitAt' _ [] = []
+splitAt' n x = if n > length x then [] else (fst (splitAt n x)) : (splitAt' n (snd (splitAt n x)))
+
+noEnds :: [[a]] -> [[a]]
+noEnds [] = []
+noEnds x = [a | a <- x, length a >= (length (head x))]
+
+takeEnd :: [[a]] -> [a]
+takeEnd [] = []
+takeEnd (x:xs) = last x : (takeEnd xs)
 
 -- #2
 -- 173 characters 
