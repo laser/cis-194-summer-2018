@@ -5,7 +5,7 @@ module Homework.Week03.Assignment (
 ) where
 
 import Data.List
-import Data.Function
+import Data.Char
 
 -- #1
 skips :: [a] -> [[a]]
@@ -20,7 +20,11 @@ localMaxima xs = map (\(_, y, _) -> y) $ filter (\(x, y, z) -> y > x && y > z) $
 
 -- #3
 histogram :: [Integer] -> String
-histogram = chart $ transpose $ mapToStrings $ fillGaps [0..9] $ map (\x -> (length x, head x)) $ group . sort
-  where fillGaps set ls = undefined -- [(Int, Int)]
-        mapToStrings ls = undefined -- [String]
-        chart ls = undefined -- String
+histogram xs = chart $ filter (not . empty) $ transpose $ mapToStrings $ normalize [0..9] $ map (\x -> (length x, head x)) . group . sort $ xs
+  where normalize [] _ = []
+        normalize (x:xs) [] = (0, x) : (normalize xs [])
+        normalize (x:xs) (y:ys) | x < snd y = (0, x) : (normalize xs (y:ys))
+                                | otherwise = y : (normalize xs ys)
+        mapToStrings ls = map (\x -> unwords $ replicate (10 - (fst x)) " " ++ replicate (fst x) "*") ls
+        empty = null . (dropWhile isSpace)
+        chart ls = unlines (ls ++ ["==========", "0123456789"]) -- String
