@@ -99,7 +99,7 @@ safeHead (x:xs) = Just x
 
 -- #15
 dropTrailingWhitespace :: String -> String
-dropTrailingWhitespace str = reverse $ dropWhile (\a -> a == ' ') $ reverse str
+dropTrailingWhitespace str = reverse $ dropWhile (== ' ') $ reverse str
 
 -- #16
 firstLetters :: [String] -> [Char]
