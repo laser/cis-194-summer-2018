@@ -47,7 +47,7 @@ ex5 bool = bool
 
 -- #6
 ex6 :: (a -> a) -> a
-ex6 = undefined
+ex6 = fix
 
 -- #7
 ex7 :: (a -> a) -> a -> a
@@ -77,21 +77,15 @@ ex12 = id
 -- #13
 insertBST :: (a -> a -> Ordering) -> a -> BST a -> BST a
 insertBST _ val Leaf = Node Leaf val Leaf
-insertBST comp val node@(Node left x right)
-  | compVal == GT = insertBST comp val right
-  | compVal == LT = insertBST comp val left
-  | compVal == EQ = node
-    where compVal = comp val x
+insertBST comp val node@(Node left x right) = 
+  case comp val x of
+    GT -> insertBST comp val right
+    LT -> insertBST comp val left
+    EQ -> node
 
 -- #14
 allCaps :: [String] -> Bool
-allCaps [] = True
-allCaps (x:xs) =
-  case safeHead x of
-    Just h -> case isUpper h of
-      True -> allCaps xs
-      False -> False
-    Nothing -> False
+allCaps strings = all (== Just True) $ map ((fmap isUpper) . safeHead) strings
 
 
 safeHead :: [a] -> Maybe a
