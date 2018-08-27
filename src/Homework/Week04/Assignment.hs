@@ -23,14 +23,15 @@ import Homework.Week04.BST
 import Data.Char
 import Data.Maybe
 import Data.List
+import Data.Function
 
 -- #1
 ex1 :: a -> b -> b
-ex1 int bool = bool
+ex1 a b = b
 
 -- #2
 ex2 :: a -> a -> a
-ex2 int int2 = int2
+ex2 a a2 = a2
 
 -- #3
 ex3 :: Int -> a -> a
