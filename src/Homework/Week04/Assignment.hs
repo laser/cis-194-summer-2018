@@ -77,7 +77,7 @@ ex12 = id
 -- #13
 insertBST :: (a -> a -> Ordering) -> a -> BST a -> BST a
 insertBST _ val Leaf = Node Leaf val Leaf
-insertBST comp val node@(Node left x right) = 
+insertBST comp val node@(Node left x right) =
   case comp val x of
     GT -> insertBST comp val right
     LT -> insertBST comp val left
@@ -85,8 +85,7 @@ insertBST comp val node@(Node left x right) =
 
 -- #14
 allCaps :: [String] -> Bool
-allCaps strings = all (== Just True) $ map ((fmap isUpper) . safeHead) strings
-
+allCaps strings = all (== Just True) $ map (fmap isUpper . safeHead) strings
 
 safeHead :: [a] -> Maybe a
 safeHead [] = Nothing
@@ -94,12 +93,12 @@ safeHead (x:xs) = Just x
 
 -- #15
 dropTrailingWhitespace :: String -> String
-dropTrailingWhitespace str = reverse $ dropWhile (== ' ') $ reverse str
+dropTrailingWhitespace str = reverse $ dropWhile (==' ') $ reverse str
 
 -- #16
 firstLetters :: [String] -> [Char]
-firstLetters strings = catMaybes $ map safeHead $ strings
+firstLetters = mapMaybe safeHead
 
 -- #17
 asList :: [String] -> String
-asList strings = "[" ++ concat (intersperse "," (filter (not . null) strings)) ++ "]"
+asList strings = "[" ++ intercalate "," (filter (not . null) strings) ++ "]"
