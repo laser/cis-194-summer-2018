@@ -23,51 +23,57 @@ import Homework.Week04.BST
 
 -- #1
 ex1 :: a -> b -> b
-ex1 = undefined
+ex1 x y = y
 
 -- #2
 ex2 :: a -> a -> a
-ex2 = undefined
+ex2 x y = y  
 
 -- #3
 ex3 :: Int -> a -> a
-ex3 = undefined
+ex3 x y = y 
 
 -- #4
+-- Your answer must include information on how many distinct functions inhabit this type.
 ex4 :: Bool -> a -> a -> a
-ex4 = undefined
+ex4 x y z = x 
 
 -- #5
+-- Your answer must include information on how many distinct functions inhabit this type.
 ex5 :: Bool -> Bool
-ex5 = undefined
+ex5 x = x 
 
 -- #6
 ex6 :: (a -> a) -> a
-ex6 = undefined
+ex6 = error "Impossible"
 
 -- #7
 ex7 :: (a -> a) -> a -> a
-ex7 = undefined
+ex7 f x = f x 
 
 -- #8
 ex8 :: [a] -> [a]
-ex8 = undefined
+ex8 [] = []
+ex8 xs = xs 
 
 -- #9
+-- this is map 
 ex9 :: (a -> b) -> [a] -> [b]
-ex9 = undefined
+ex9 f [] _ = []
+ex9 f (x:xs) = (f x) : (ex9 f xs) 
 
 -- #10
 ex10 :: Maybe a -> a
-ex10 = undefined
+ex10 Nothing = error "Impossible"
+ex10 (Just x) = x
 
 -- #11
 ex11 :: a -> Maybe a
-ex11 = undefined
+ex11 x = Just x
 
 -- #12
 ex12 :: Maybe a -> Maybe a
-ex12 = undefined
+ex12 x = x
 
 -- #13
 insertBST :: (a -> a -> Ordering) -> a -> BST a -> BST a
