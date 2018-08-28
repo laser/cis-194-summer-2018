@@ -102,4 +102,4 @@ firstLetters strings = catMaybes $ map safeHead $ strings
 
 -- #17
 asList :: [String] -> String
-asList strings = "[" ++ concat (intersperse "," ( filter (not . null) strings)) ++ "]"
+asList strings = "[" ++ concat (intersperse "," (filter (not . null) strings)) ++ "]"
