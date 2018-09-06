@@ -43,7 +43,7 @@ ex5 a = a
 
 -- #6
 ex6 :: (a -> a) -> a
-ex6 = undefined
+ex6 f = let x = f x in x
 
 -- #7
 ex7 :: (a -> a) -> a -> a
@@ -86,6 +86,7 @@ allCaps' :: String -> Bool
 allCaps' [] = False
 allCaps' (x:xs) = toUpper x == x
 
+-- #15
 dropTrailingWhitespace :: String -> String
 dropTrailingWhitespace [] = []
 dropTrailingWhitespace xs = go (reverse xs) 

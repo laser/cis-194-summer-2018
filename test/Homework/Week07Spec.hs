@@ -21,13 +21,13 @@ spec :: Spec
 spec = do
   describe "tag" $ do
     it "gets the annotation at the root of a JoinList" $ do
-      pending
+      --pending
       tag (Append (Sum 5) (Single (Sum 3) 'a') (Single (Sum 2) 'b')) `shouldBe` Sum 5
       tag (Single (Sum 10) 'a') `shouldBe` Sum 10
 
   describe "+++" $ do
     it "appends two JoinList structures together" $ do
-      pending
+      --pending
       let a = Single (Sum 3) 'a'
       let b = Single (Sum 2) 'b'
       (+++) a b `shouldBe` Append (Sum 5) a b

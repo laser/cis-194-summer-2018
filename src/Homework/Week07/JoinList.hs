@@ -16,25 +16,34 @@ module Homework.Week07.JoinList (
 import Homework.Week07.Buffer
 import Homework.Week07.Scrabble
 import Homework.Week07.Sized
+import Data.Monoid
 
 data JoinList m a = Empty
                   | Single m a
                   | Append m (JoinList m a) (JoinList m a) deriving (Eq, Show)
 
 tag :: Monoid m => JoinList m a -> m
-tag = undefined
+tag Empty = mempty
+tag (Single m a) = m
+tag (Append m x x') = m
+
 
 (!!?) :: [a] -> Int -> Maybe a
 (!!?) = undefined
 
 jlToList :: Monoid m => JoinList m a -> [a]
-jlToList = undefined
+jlToList Empty = []
+jlToList (Single m a) = [a]
+jlToList (Append m l r) = jlToList l <> jlToList r
 
 (+++) :: Monoid m => JoinList m a -> JoinList m a -> JoinList m a
-(+++) = undefined
+(+++) Empty x = x
+(+++) x Empty = x
+(+++) (Single m a) (Single m' a') = Append (m <> m') (Single m a) (Single m' a')
+(+++) (Append m l r) (Append m' l' r') = Append (m <> m') (Append m l r) (Append m' l' r')
 
 indexJ :: (Sized b, Monoid b) => Int -> JoinList b a -> Maybe a
-indexJ = undefined
+indexJ _ Empty = Nothing
 
 dropJ :: (Sized b, Monoid b) => Int -> JoinList b a -> JoinList b a
 dropJ = undefined
