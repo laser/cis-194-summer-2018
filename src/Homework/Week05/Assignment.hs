@@ -35,8 +35,8 @@ class Expr a where
 -- #4
 instance Expr Integer where
   lit a = eval $ Lit a
-  add a b = a + b
-  mul a b = a * b
+  add = (+)
+  mul = (*)
 
 instance Expr ExprT where
   lit = Lit
@@ -52,7 +52,7 @@ newtype MinMax = MinMax Integer deriving (Eq, Show, Ord)
 newtype Mod7 = Mod7 Integer deriving (Eq, Show, Ord, Num)
 
 instance Expr MinMax where
-  lit a = MinMax a
+  lit = MinMax
   add = max
   mul = min
 
@@ -60,4 +60,3 @@ instance Expr Mod7 where
   lit a = Mod7 $ a `mod` 7
   add (Mod7 a) (Mod7 b) = Mod7 $ (a + b) `mod` 7
   mul (Mod7 a) (Mod7 b) = Mod7 $ (a * b) `mod` 7
-
