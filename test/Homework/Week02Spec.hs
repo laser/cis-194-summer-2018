@@ -29,11 +29,9 @@ spec = do
 
   describe "insert" $ do
     it "no-ops given an Unknown LogMessage" $ do
-      pending
       insert (Unknown "foo") Leaf `shouldBe` Leaf
 
     it "returns a new tree with itself included, given a Leaf" $ do
-      pending
       let a = Leaf
       let b = LogMessage Warning 5 "baz"
       let c = insert b a
@@ -42,7 +40,6 @@ spec = do
 
 
     it "maintains the sort order of messages in the tree" $ do
-      pending
       let foo = LogMessage Warning 10 "foo"
       let baz = LogMessage Warning 5 "baz"
       let bif = LogMessage Warning 15 "bif"
@@ -57,7 +54,6 @@ spec = do
 
   describe "build" $ do
     it "builds a MessageTree from a list of LogMessages" $ do
-      pending
       let foo = LogMessage Warning 10 "foo"
       let baz = LogMessage Warning 5 "baz"
       let bif = LogMessage Warning 15 "bif"
@@ -67,7 +63,6 @@ spec = do
 
   describe "inOrder" $ do
     it "will deconstruct the MessageTree into a list of LogMessages" $ do
-      pending
       let foo = LogMessage Warning 10 "foo"
       let baz = LogMessage Warning 5 "baz"
       let bif = LogMessage Warning 15 "bif"
@@ -80,7 +75,6 @@ spec = do
 
   describe "whatWentWrong" $ do
     it "will return the messages from LogMessages with Errors whose severity is 50+ - sorted by timestamp" $ do
-      pending
       let messages = [LogMessage (Error 49) 10 "alpha", LogMessage (Error 51) 11 "beta", LogMessage (Error 100) 9 "kappa", Unknown "foo", LogMessage Warning 100 "blar"]
 
       whatWentWrong messages `shouldBe` ["kappa", "beta"]
