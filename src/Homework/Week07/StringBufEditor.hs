@@ -1,6 +1,5 @@
 module Main where
 
-import Homework.Week07.Assignment
 import Homework.Week07.Editor
 import Homework.Week07.StringBuffer
 

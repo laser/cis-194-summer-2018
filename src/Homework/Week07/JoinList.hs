@@ -1,4 +1,4 @@
-{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE FlexibleInstances, InstanceSigs #-}
 
 module Homework.Week07.JoinList (
   tag,
@@ -45,10 +45,34 @@ takeJ = undefined
 scoreLine :: String -> JoinList Score String
 scoreLine = undefined
 
+-- Type class for data structures that can represent the text buffer
+-- of an editor.
 instance Buffer (JoinList (Score, Size) String) where
-  fromString = undefined
-  line = undefined
-  numLines = undefined
-  replaceLine = undefined
+
+  -- | Convert a buffer to a String.
+  toString :: JoinList (Score, Size) String -> String
   toString = undefined
+
+  -- | Create a buffer from a String.
+  fromString :: String -> JoinList (Score, Size) String
+  fromString = undefined
+
+  -- | Extract the nth line (0-indexed) from a buffer.  Return Nothing
+  -- for out-of-bounds indices.
+  line :: Int -> JoinList (Score, Size) String -> Maybe String
+  line = undefined
+
+  -- | @replaceLine n ln buf@ returns a modified version of @buf@,
+  --   with the @n@th line replaced by @ln@.  If the index is
+  --   out-of-bounds, the buffer should be returned unmodified.
+  replaceLine :: Int -> String -> JoinList (Score, Size) String -> JoinList (Score, Size) String
+  replaceLine = undefined
+
+  -- | Compute the number of lines in the buffer.
+  numLines :: JoinList (Score, Size) String -> Int
+  numLines = undefined
+
+  -- | Compute the value of the buffer, i.e. the amount someone would
+  --   be paid for publishing the contents of the buffer.
+  value :: JoinList (Score, Size) String -> Int
   value = undefined
