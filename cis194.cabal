@@ -40,6 +40,7 @@ library
                      , Homework.Week11.Assignment
                      , Homework.Week12.Assignment
   build-depends:       base >= 4.7 && < 5
+                     , hspec
                      , MonadRandom
                      , QuickCheck
                      , aeson
@@ -49,6 +50,7 @@ library
                      , sqlite-simple
                      , transformers
                      , mtl
+                     , containers
   default-language:    Haskell2010
 
 test-suite cis194-test

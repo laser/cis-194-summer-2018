@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -Wall -Werror #-}
+
 module Homework.Week07.Scrabble where
 
 newtype Score = Score Int
