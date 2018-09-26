@@ -13,14 +13,16 @@ module Homework.Week06.Assignment (
 
 -- #1a
 fib :: Integer -> Integer
-fib = undefined
+fib n 
+  | n > 1 = fib (n - 1) + fib (n - 2)
+  | otherwise = n
 
 fibs1 :: [Integer]
-fibs1 = undefined
+fibs1 = map fib [1..]
 
 -- #2
 fibs2 :: [Integer]
-fibs2 = undefined
+fibs2 = 0 : 1 : zipWith (+) fibs2 (tail fibs2)
 
 -- #3
 data Stream a = Stream a -- replace this with your own definition; this one is wrong
