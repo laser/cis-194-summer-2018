@@ -2,16 +2,16 @@
 {-# LANGUAGE FlexibleInstances, InstanceSigs #-}
 
 module Homework.Week07.JoinList (
-  tag,
-  indexJ,
-  (+++),
-  (!!?),
-  jlToList,
-  dropJ,
-  takeJ,
-  scoreLine,
-  Sized(..),
-  JoinList(..)
+    tag,
+    indexJ,
+    (+++),
+    (!!?),
+    jlToList,
+    dropJ,
+    takeJ,
+    scoreLine,
+    Sized(..),
+    JoinList(..)
 ) where
 
 import Data.Monoid ((<>))
@@ -19,9 +19,11 @@ import Homework.Week07.Buffer
 import Homework.Week07.Scrabble
 import Homework.Week07.Sized
 
-data JoinList m a = Empty
-                  | Single m a
-                  | Append m (JoinList m a) (JoinList m a) deriving (Eq, Show)
+data JoinList m a
+    = Empty
+    | Single m a
+    | Append m (JoinList m a) (JoinList m a)
+    deriving (Eq, Show)
 
 tag :: Monoid m => JoinList m a -> m
 tag Empty = mempty
