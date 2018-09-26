@@ -21,8 +21,8 @@ fib n = fib (n-1) + fib (n-2)
 fibs1 :: [Integer]
 fibs1 = map fib [0..]
 
-fib_closed n = floor (((rho ^ n) / (sqrt 5)) + 0.5)
-    where rho = (1 + (sqrt 5)) / 2
+fib_closed n = floor (((phi ^ n) / (sqrt 5)) + 0.5)
+    where phi = (1 + (sqrt 5)) / 2
 
 -- #2
 fibs2 :: [Integer]
