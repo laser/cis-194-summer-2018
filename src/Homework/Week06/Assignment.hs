@@ -13,33 +13,43 @@ module Homework.Week06.Assignment (
 
 -- #1a
 fib :: Integer -> Integer
-fib = undefined
+fib  0 = 0
+fib  1 = 1
+fib  2 = 1
+fib n = fib (n-1) + fib (n-2)
 
 fibs1 :: [Integer]
-fibs1 = undefined
+fibs1 = map fib [0..]
+
+fib_closed n = floor (((rho ^ n) / (sqrt 5)) + 0.5)
+    where rho = (1 + (sqrt 5)) / 2
 
 -- #2
 fibs2 :: [Integer]
-fibs2 = undefined
+fibs2 =  map fib_closed [0..]
+    
 
 -- #3
-data Stream a = Stream a -- replace this with your own definition; this one is wrong
+{-data Stream a = Stream a -- replace this with your own definition; this one is wrong-}
+data Stream a = Cons a (Stream a)
 
 streamToList :: Stream a -> [a]
-streamToList = undefined
+streamToList (Cons x xs) = [x] ++ (streamToList xs)
 
--- instance Show a => Show (Stream a) where
---   show = ???
+instance Show a => Show (Stream a) where
+   show x = show (take 20 $ streamToList x)
 
 -- #4
 streamRepeat :: a -> Stream a
-streamRepeat = undefined
+streamRepeat a = Cons a (streamRepeat a)
 
 streamMap :: (a -> b) -> Stream a -> Stream b
-streamMap = undefined
+streamMap f (Cons x xs) = Cons (f x) (streamMap f xs)
 
 streamFromSeed :: (a -> a) -> a -> Stream a
 streamFromSeed = undefined
+{-streamFromSeed f (Cons n0 xs) = Cons n1 (streamFromSeed f (Cons n1 xs))-}
+ {-where n1 = f n0-}
 
 -- #5
 nats :: Stream Integer
