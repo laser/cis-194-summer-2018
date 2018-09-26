@@ -2,15 +2,19 @@ module Homework.Week01.Assignment where
 
 -- #1a
 toDigits :: Integer -> [Integer]
-toDigits = undefined
+toDigits n
+    | n <= 0 = []
+    | otherwise = map (\x -> read x ::Integer) $ map (\x -> [x]) $ show n
 
 -- #1b
 toDigitsRev :: Integer -> [Integer]
-toDigitsRev = undefined
+toDigitsRev n = reverse (toDigits n)
+{-toDigitsRev = reverse $ toDigits-}
 
 -- #2
-doubleEveryOther :: [Integer] -> [Integer]
-doubleEveryOther = undefined
+doubleEveryOther :: [Int] -> [Int]
+{-doubleEveryOther :: [Integer] -> [Intger]-}
+doubleEveryOther foo = [ x  * (1 + (i `mod` 2)) | (x,i) <- zip foo [0..length foo]]
 
 -- #3
 sumDigits :: [Integer] -> Integer
