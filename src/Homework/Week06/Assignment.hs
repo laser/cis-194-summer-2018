@@ -27,6 +27,9 @@ fib_closed n = floor (((phi ^ n) / (sqrt 5)) + 0.5)
 -- #2
 fibs2 :: [Integer]
 fibs2 =  map fib_closed [0..]
+
+fibs3 = [0,1] ++ [fibs3 !! (n- 1) + fibs3 !! (n-2) | n <- [2..]]
+fibs4 = 0 : 1 : zipWith (+) fibs4 (tail fibs4)
     
 
 -- #3
@@ -35,9 +38,12 @@ data Stream a = Cons a (Stream a)
 
 streamToList :: Stream a -> [a]
 streamToList (Cons x xs) = [x] ++ (streamToList xs)
+streamToList2 (Cons x xs) = x : streamToList xs
 
 instance Show a => Show (Stream a) where
    show x = show (take 20 $ streamToList x)
+{-instance Show a => Show (Stream a) where-}
+   {-show x = show .take 20 . streamToList -}
 
 -- #4
 streamRepeat :: a -> Stream a
