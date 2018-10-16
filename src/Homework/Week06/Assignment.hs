@@ -53,13 +53,17 @@ streamMap :: (a -> b) -> Stream a -> Stream b
 streamMap f (Cons x xs) = Cons (f x) (streamMap f xs)
 
 streamFromSeed :: (a -> a) -> a -> Stream a
-streamFromSeed = undefined
+streamFromSeed f a = Cons a (streamFromSeed f (f a))
 {-streamFromSeed f (Cons n0 xs) = Cons n1 (streamFromSeed f (Cons n1 xs))-}
  {-where n1 = f n0-}
 
 -- #5
 nats :: Stream Integer
-nats = undefined
+nats = streamFromSeed (\x -> x + 1) 0
 
 ruler :: Stream Integer
 ruler = undefined
+
+
+{-interleavesStreams :: Stream a -> Stream a -> Stream a-}
+{-interleavesStreams (Cons x xs) (Cons y ys) = -}
