@@ -1,3 +1,6 @@
+--{-# LANGUAGE TypeSynonymInstances #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE InstanceSigs #-}
 module Homework.Week05.Assignment (
   eval,
   evalStr,
@@ -10,6 +13,7 @@ module Homework.Week05.Assignment (
 
 import Homework.Week05.ExprT
 import Homework.Week05.Parser
+import qualified Homework.Week05.StackVM as S
 
 -- #1
 eval :: ExprT -> Integer
@@ -59,5 +63,18 @@ instance Expr Mod7 where
     lit x = Mod7 $ x `mod` 7
     add (Mod7 x) (Mod7 y) = Mod7 $ (x+y) `mod` 7
     mul (Mod7 x) (Mod7 y) = Mod7 $ (x*y) `mod` 7
+
 reify :: ExprT -> ExprT
 reify = id
+
+-- 5)
+
+instance Expr S.Program where
+    lit:: Integer -> S.Program
+    lit x = [S.PushI x]
+    add :: S.Program -> S.Program -> S.Program
+    add x y = y ++ x ++ [S.Add]
+    mul x y = y ++ x ++ [S.Mul]
+    
+compile :: String -> Maybe S.Program
+compile = parseExp lit add mul
