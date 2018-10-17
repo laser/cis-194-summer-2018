@@ -1,4 +1,4 @@
-module BST where
+module Homework.Week04.BST where
 
 import Test.QuickCheck
 import Control.Applicative

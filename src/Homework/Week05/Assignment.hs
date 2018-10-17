@@ -7,8 +7,8 @@ module Homework.Week05.Assignment (
     Mod7(..)
 ) where
 
-import ExprT
-import Parser
+import Homework.Week05.ExprT
+import Homework.Week05.Parser
 
 -- #1
 eval :: ExprT -> Integer

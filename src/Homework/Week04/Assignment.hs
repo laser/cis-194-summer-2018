@@ -19,7 +19,7 @@ module Homework.Week04.Assignment (
   BST(..)
 ) where
 
-import BST
+import Homework.Week04.BST
 import Data.Function
 import Data.Char
 import Data.List
