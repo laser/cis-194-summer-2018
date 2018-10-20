@@ -67,7 +67,7 @@ spec = do
 
     describe "<|>" $ do
       it "uses the first parser if successful" $ do
-        pending
+        --pending
         let p1 = char '*' <|> char '$'
         runParser p1 "*abc" `shouldBe` Just ('*', "abc")
 
