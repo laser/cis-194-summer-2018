@@ -93,19 +93,22 @@ spec = do
       it "takes the first n elements from a JoinList" $ do
         --pending
         jlToList (takeJ 2 jl) `shouldBe` ['s', 'u']
+      it "takes the first n elements from a JoinList2" $ do
+        --pending
+        jlToList (takeJ 2 jl3) `shouldBe` ['a', 'b']
 
   describe "scoreLine" $ do
     it "scores a single word" $ do
-      pending
+      --pending
       tag (scoreLine "yay") `shouldBe` Score 9
     it "scores a with special characters" $ do
-      pending
+      --pending
       tag (scoreLine "haskell!") `shouldBe` Score 14
     it "scores words" $ do
-      pending
+      --pending
       tag (scoreLine "yay" +++ scoreLine "haskell!") `shouldBe` Score 23
     it "converts to joinLists" $ do
-      pending
+      --pending
       jlToList (scoreLine "yay" +++ scoreLine "haskell!") `shouldBe` ["yay", "haskell!"]
 
   describe "Buffer" $ do
@@ -116,36 +119,36 @@ spec = do
           :: JoinList (Score, Size) String
     describe "fromString" $ do
       it "converts a string to a JoinList" $ do
-        pending
+        --pending
         let processedList = fromString testString :: JoinList (Score, Size) String
         jlToList processedList `shouldBe` jlToList testJoinList
         tag processedList `shouldBe` (Score 11, Size 2)
     describe "toString" $ do
       it "converts a JoinList to a string" $ do
-        pending
+        --pending
         toString testJoinList `shouldBe` testString
     describe "line" $ do
       it "gets a single line" $ do
-        pending
+        --pending
         line 0 (Single (Score 2, Size 1) "a") `shouldBe` Just "a"
       it "gets a line from a joinList" $ do
-        pending
+        --pending
         line 0 testJoinList `shouldBe` Just "a"
       it "gets a second line from a joinList" $ do
-        pending
+        --pending
         line 1 testJoinList `shouldBe` Just "z"
     describe "numLines" $ do
       it "counts lines" $ do
-        pending
+        --pending
         numLines testJoinList `shouldBe` 2
     describe "replaceLine" $ do
       it "replaces the first line" $ do
-        pending
+        --pending
         let updatedList = replaceLine 0 "e" testJoinList
         jlToList updatedList `shouldBe` ["e", "z"]
         tag updatedList `shouldBe` (Score 11, Size 2)
       it "replaces another line" $ do
-        pending
+        --pending
         let updatedList = replaceLine 1 "e" testJoinList
         jlToList updatedList `shouldBe` ["a", "e"]
         tag updatedList `shouldBe` (Score 2, Size 2)

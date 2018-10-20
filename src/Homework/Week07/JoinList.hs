@@ -1,3 +1,4 @@
+{-# LANGUAGE InstanceSigs #-}
 {-# LANGUAGE FlexibleInstances #-}
 
 module Homework.Week07.JoinList (
@@ -64,7 +65,7 @@ dropJ :: (Sized b, Monoid b) => Int -> JoinList b a -> JoinList b a
 dropJ 0 jl = jl
 dropJ _ Empty = Empty
 dropJ i (Single m a)
-    | i >= getSize (size m) = Empty
+    | i >= gss m = Empty
     | otherwise = Single m a
 dropJ i (Append m l r)
     | i >= gss m = Empty
@@ -81,16 +82,70 @@ takeJ i (Append m l r)
     | otherwise = takeJ i l
 takeJ i (Single m a)
     | i >= gss m = Single m a
-    | getSize (size m) == i = Single m a
+    | gss m == i = Single m a
     | otherwise = Empty
 
+
+toStringJ :: JoinList (Score, Size) String -> String
+toStringJ Empty = ""
+toStringJ (Single m a) = a
+toStringJ (Append m l r) = toStringJ l <> "\n" <> toStringJ r
+
+insertJ :: String -> JoinList (Score, Size) String
+insertJ str = f str Empty
+    where f [] jl = jl
+          f (x:xs) Empty = f xs (Single (score x, Size 1) [x])
+          f (x:xs) jl =  jl +++ (f xs (Single (score x, Size 1) [x]))
+
 scoreLine :: String -> JoinList Score String
-scoreLine = undefined
+scoreLine xs = Single (scoreString xs) xs
+
+getScore :: Score -> Int
+getScore (Score x) = x
+
+replaceLineJ :: Int 
+             -> String 
+             -> JoinList (Score, Size) String 
+             -> JoinList (Score, Size) String
+replaceLineJ i str (Append m l r)
+    | i < gsst l = replaceLineJ i str l +++ r
+    | otherwise = l +++ replaceLineJ (i - gsst l) str r
+replaceLineJ i str (Single m a)
+    | i == gss m = Single (scoreString str, Size 1) str
+    | i == 0 = Single (scoreString str, Size 1) str
+    | otherwise = Empty
+replaceLineJ _ _ Empty = Empty
+
+swapString :: String 
+           -> JoinList (Score, Size) String 
+           -> JoinList (Score, Size) String
+swapString str (Single m a) = Single (scoreString str, Size 1) str
+swapString str jl = jl
 
 instance Buffer (JoinList (Score, Size) String) where
-  fromString = undefined
-  line = undefined
-  numLines = undefined
-  replaceLine = undefined
-  toString = undefined
-  value = undefined
+  fromString :: String -> JoinList (Score, Size) String
+  fromString = insertJ . filter (/= '\n')
+
+  line :: Int -> JoinList (Score, Size) String -> Maybe String
+  line = indexJ
+
+  numLines :: JoinList (Score, Size) String -> Int
+  numLines t = case t of
+    Empty -> 0
+    (Single _ _) -> 1
+    (Append m l r) -> gss $ snd m
+
+  replaceLine :: Int 
+              -> String 
+              -> JoinList (Score, Size) String 
+              -> JoinList (Score, Size) String
+  replaceLine = replaceLineJ
+
+  toString :: JoinList (Score, Size) String -> String
+  toString = toStringJ
+
+  value :: JoinList (Score, Size) String -> Int
+  value t = case t of
+    Empty -> 0
+    (Single m _) -> getScore $ fst m
+    (Append m _ _) -> getScore $ fst m
