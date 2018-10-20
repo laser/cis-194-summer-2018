@@ -87,7 +87,7 @@ instance Monad (Supply s) where
     (>>=) = bindSupply
 
 
-data Tree a = Node (Tree a) (Tree a) | Leaf a deriving Show
+data Tree a = Node (Tree a) (Tree a) | Leaf a deriving (Show, Eq)
 
 labelTree :: Tree a -> Tree Integer
 labelTree t = runSupply nats (go t)
