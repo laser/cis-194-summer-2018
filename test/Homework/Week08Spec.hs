@@ -62,7 +62,7 @@ spec = do
   describe "Alternative Parser" $ do
     describe "empty" $ do
       it "is a parser that always fails" $ do
-        pending
+        --pending
         runParser (empty :: Parser ()) "abc" `shouldBe` Nothing
 
     describe "<|>" $ do
