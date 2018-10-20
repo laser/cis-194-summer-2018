@@ -19,19 +19,19 @@ spec = do
 
   describe "zeroOrMore" $ do
     it "runs the parser zero or more times" $ do
-      pending
+      --pending
       runParser (zeroOrMore upper) "ABCdEfgH" `shouldBe` Just ("ABC", "dEfgH")
       runParser (zeroOrMore upper) "abcdeFGh" `shouldBe` Just ("", "abcdeFGh")
 
   describe "oneOrMore" $ do
     it "runs the parser one or more times" $ do
-      pending
+      --pending
       runParser (oneOrMore upper) "ABCdEfgH" `shouldBe` Just ("ABC", "dEfgH")
       runParser (oneOrMore upper) "abcdeFGh" `shouldBe` Nothing
 
   describe "spaces" $ do
     it "parses a consecutive list of zero or more whitespace characters" $ do
-      pending
+      --pending
       runParser spaces "   a b c " `shouldBe` Just ("   ", "a b c ")
       runParser spaces " \n \r \t a b c " `shouldBe` Just (" \n \r \t ", "a b c ")
       runParser spaces "a b c " `shouldBe` Just ("", "a b c ")
@@ -39,7 +39,7 @@ spec = do
 
   describe "ident" $ do
     it "parses an alphabetic char followed by zero or more alphanumerics" $ do
-      pending
+      --pending
       runParser ident "foobar baz" `shouldBe` Just ("foobar", " baz")
       runParser ident "foo33fA" `shouldBe` Just ("foo33fA", "")
       runParser ident "f" `shouldBe` Just ("f", "")
@@ -48,15 +48,15 @@ spec = do
 
   describe "parseSExpr" $ do
     it "parses numeric atoms" $ do
-      pending
+      --pending
       runParser parseSExpr "5" `shouldBe` Just (A (N 5), "")
 
     it "parses identifiers" $ do
-      pending
+      --pending
       runParser parseSExpr "foo3" `shouldBe` Just (A (I "foo3"), "")
 
     it "parses lists of s-expressions" $ do
-      pending
+      --pending
       runParser parseSExpr "(bar (foo) 3 5 874)"
         `shouldBe` Just (Comb [ A (I "bar"), Comb [A (I "foo")]
                               , A (N 3), A (N 5), A (N 874)

@@ -1,6 +1,6 @@
 module Homework.Week09.AParser (
-  Parser, 
-  runParser, 
+  Parser(..), 
+  --runParser, 
   satisfy, 
   char, 
   posInt
@@ -44,6 +44,13 @@ instance Applicative Parser where
     case fp s of
       Nothing     -> Nothing
       Just (f,s') -> runParser (f <$> xp) s'
+
+instance Monad Parser where
+    return = pure
+    (>>=) p f = Parser $ \s -> do
+        (a, xs) <- runParser p s
+        (b, ys) <- runParser (f a) xs
+        return (b, ys)
 
 instance Alternative Parser where
   empty = Parser (const Nothing)
