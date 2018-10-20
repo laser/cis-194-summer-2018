@@ -20,7 +20,7 @@ spec = do
   describe "Functor Parser" $ do
     describe "fmap" $ do
       it "applies a function to the result of a parser" $ do
-        pending
+        --pending
         let p = fmap (+1) posInt
         runParser p "41" `shouldBe` Just (42, "")
         runParser p "x"  `shouldBe` Nothing
@@ -28,12 +28,12 @@ spec = do
   describe "Applicative Parser" $ do
     describe "pure" $ do
       it "creates a parser that consumes nothing and returns a value" $ do
-        pending
-        -- property $ \str -> runParser (pure ()) str == Just ((), str)
+        --pending
+        property $ \str -> runParser (pure ()) str == Just ((), str)
 
     describe "<*>" $ do
       it "applies a function from a parser to the result of a parser" $ do
-        pending
+        --pending
         let p1 = pure (+1) <*> posInt
         runParser p1 "41" `shouldBe` Just (42, "")
 
@@ -42,21 +42,21 @@ spec = do
 
   describe "abParser" $ do
     it "parses the characters 'a' and 'b' as a pair" $ do
-      pending
+      --pending
       runParser abParser "abcdef" `shouldBe` Just (('a', 'b'), "cdef")
       runParser abParser "bcdefa" `shouldBe` Nothing
       runParser abParser "aecdbf" `shouldBe` Nothing
 
   describe "abParser_" $ do
     it "parses the characters 'a' and 'b' but returns nothing" $ do
-      pending
+      --pending
       runParser abParser_ "abcdef" `shouldBe` Just ((), "cdef")
       runParser abParser_ "bcdefa" `shouldBe` Nothing
       runParser abParser_ "aecdbf" `shouldBe` Nothing
 
   describe "intPair" $ do
     it "parses two integer values separated by a space" $ do
-      pending
+      --pending
       runParser intPair "12 34" `shouldBe` Just ([12, 34], "")
 
   describe "Alternative Parser" $ do
@@ -75,7 +75,7 @@ spec = do
         runParser p2 "1234" `shouldBe` Just ('1', "234")
 
       it "user the second parser if the first one fails" $ do
-        pending
+        --pending
         let p1 = char '*' <|> char '$'
         runParser p1 "$abc" `shouldBe` Just ('$', "abc")
 
@@ -88,7 +88,7 @@ spec = do
 
   describe "intOrUppercase" $ do
     it "consumes an integer or an uppercase character" $ do
-      pending
+      --pending
       runParser intOrUppercase "342abcd" `shouldBe` Just ((), "abcd")
       runParser intOrUppercase "XYZ" `shouldBe` Just ((), "YZ")
       runParser intOrUppercase "foo" `shouldBe` Nothing
