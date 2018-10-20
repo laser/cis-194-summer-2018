@@ -21,9 +21,10 @@ first' :: (a -> b) -> (c,a) -> (c,b)
 first' = fmap 
 
 instance Functor Parser where
-  fmap f pa = Parser $ \s -> do
-    (a, xs)  <- runParser pa $ s
-    return (f a, xs)
+  --fmap f pa = Parser $ \s -> do
+  --  (a, xs)  <- runParser pa $ s
+  --  return (f a, xs)
+  fmap f xs = xs >>= return . f
 
 -- #2
 instance Applicative Parser where
