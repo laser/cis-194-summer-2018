@@ -26,7 +26,6 @@ getExp (Just x) =  Just (eval x)
 evalStr :: String -> Maybe Integer
 evalStr = getExp . parseExp'
 
-
 -- #3
 class Expr a where
   lit :: Integer -> a
