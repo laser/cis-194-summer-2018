@@ -1,4 +1,3 @@
-
 module Homework.Week07Spec (
   main,
   spec
@@ -19,6 +18,11 @@ import Data.Foldable (fold)
 main :: IO ()
 main = hspec spec
 
+
+----------------------
+-- QuickCheck Setup --
+----------------------
+
 instance Arbitrary Size where
     arbitrary = sizeGen
 
@@ -37,47 +41,42 @@ joinListGen depth
     | depth > 0 = 
         oneof
             [ Single <$> arbitrary <*> arbitrary
-            , (+++) <$> (joinListGen (depth - 1)) <*> (joinListGen (depth - 1))]
-
-genSafeChar :: Gen Char
-genSafeChar = elements ['a'..'z']
+            , (+++) <$> (joinListGen (depth - 1)) <*> joinListGen (depth - 1)]
 
 genSafeString :: Gen String
-genSafeString = listOf genSafeChar
+genSafeString = listOf $ elements ['a'..'z']
 
-genSafeStrings :: Gen String
-genSafeStrings = fmap foldStrings $ listOf genSafeString
-
-genScopedInt :: (Int -> Bool) -> Gen Int
-genScopedInt f = suchThat (arbitrary :: Gen Int) f
+genSafeStringsWithBreaks :: Gen String
+genSafeStringsWithBreaks = foldStrings <$> listOf genSafeString
 
 foldStrings :: [String] -> String
 foldStrings = 
     let f a b = if a /= "" then a ++ "\n" ++ b else b
     in foldr f ""
 
--- Naive tree traversal size count.
-sizeJ :: JoinList m a -> Int
-sizeJ Empty = 0
-sizeJ (Single _ _) = 1
-sizeJ (Append _ l r) = sizeJ l + sizeJ r
+
+----------------
+-- Test Cases --
+----------------
 
 spec :: Spec
 spec = do
-  describe "tag" $ do
-    it "gets the annotation at the root of a JoinList" $ do
-      --pending
-      tag (Append (Sum 5) (Single (Sum 3) 'a') (Single (Sum 2) 'b')) `shouldBe` Sum 5
-      tag (Single (Sum 10) 'a') `shouldBe` Sum 10
-
-  describe "+++" $ do
-    it "appended joinlist should always `mappend` child annotations" $ do
+  describe "quickCheck" $ do
+    it "appended joinlist should always sum child `Size` annotations" $ do
       property $
           \jl1 jl2 -> 
               let m1 = (getSize . size . tag) (jl1 :: JoinList Size Char)
                   m2 = (getSize . size . tag) (jl2 :: JoinList Size Char)
                   m3 = (getSize . size . tag) $ (+++) jl1 jl2
               in m1 + m2 == m3
+
+  describe "tag" $ do
+    it "gets the annotation at the root of a JoinList" $ do
+      --pending
+      tag (Append (Sum 5) (Single (Sum 3) 'a') (Single (Sum 2) 'b')) `shouldBe` Sum 5
+      tag (Single (Sum 10) 'a') `shouldBe` Sum 10
+
+  describe "quickCheck" $ do
     it "appends two JoinList structures together" $ do
       --pending
       let a = Single (Sum 3) 'a'
@@ -164,7 +163,7 @@ spec = do
       it "`toString . fromString` is `identity :: String -> String`" $ do
         --pending
         property $ 
-          forAll genSafeStrings $
+          forAll genSafeStringsWithBreaks $
           \xs -> 
             let identity ys = toString (fromString ys :: JoinList (Score, Size) String)
             in identity xs == xs
@@ -172,71 +171,69 @@ spec = do
       it "`fromString . toString` is `identity :: JoinList m a -> JoinList m a`" $ do
         --pending
         property $ 
-          forAll genSafeStrings $
+          forAll genSafeStringsWithBreaks $
           \xs -> 
             let jl = fromString xs :: JoinList (Score, Size) String
                 identity jl' = fromString (toString jl') :: JoinList (Score, Size) String
             in identity jl == jl
 
-      it "numLines gives same result as length after filtering non-newlines" $ do
+      it "`numLines` == `length . filter`" $ do
         --pending
         property $ 
-          forAll genSafeStrings $
+          forAll genSafeStringsWithBreaks $
           \xs -> 
             let jl = fromString xs :: JoinList (Score, Size) String
-            in (numLines jl) == (length . filter (\x -> x == '\n')) xs
+            in numLines jl == (length . filter (== '\n')) xs
 
-      it "replaceLine adjusts score appropriately" $ do
+      it "score after `replaceLine` == prior score - replaced string + new string" $ do
         --pending
         property $ 
-          forAll (suchThat genSafeStrings (\x -> x /= "")) $ \xs -> 
+          forAll (suchThat genSafeStringsWithBreaks (/= "")) $ \xs -> 
           forAll genSafeString $ \str -> 
-            let jl = fromString xs :: JoinList (Score, Size) String
+            let jl     = fromString xs :: JoinList (Score, Size) String
                 sizeJl = numLines jl
-                pred   = \x -> (x >= 0 && x < sizeJl) || (x == 0 && sizeJl == 0)
-            in forAll (genScopedInt pred) $ \i ->
-              let (Score s)  = scoreString . fold $ (line i jl)
+                pred x = (x >= 0 && x < sizeJl) || (x == 0 && sizeJl == 0)
+            in forAll (suchThat arbitrary pred) $ \i ->
+              let (Score s)  = scoreString . fold $ line i jl
                   jl2        = replaceLine i str jl
                   (Score s') = scoreString str
               in value jl2 == (value jl - s) + s'
 
-      it "`line i` after `replaceLine i str` returns `str`" $ do
+      it "`(fold . line i $ replaceLine i str jl) == str`" $ do
         --pending
         property $ 
-          forAll (suchThat genSafeStrings (\x -> x /= "")) $ \xs -> 
+          forAll (suchThat genSafeStringsWithBreaks (/= "")) $ \xs -> 
           forAll genSafeString $ \str -> 
             let jl     = fromString xs :: JoinList (Score, Size) String
                 sizeJl = numLines jl
-                pred   = \x -> (x >= 0 && x < sizeJl) || (x == 0 && sizeJl == 0)
-            in forAll (genScopedInt pred) $ \i ->
-              let jl2 = replaceLine i str jl
-              in (fold $ line i jl2) == str
+                pred x = (x >= 0 && x < sizeJl) || (x == 0 && sizeJl == 0)
+            in forAll (suchThat arbitrary pred) $ \i ->
+              (fold . line i $ replaceLine i str jl) == str
 
       it "`replaceLine i str` is idempotent" $ do
         --pending
         property $ 
-          forAll genSafeStrings $ \xs -> 
+          forAll genSafeStringsWithBreaks $ \xs -> 
           forAll genSafeString $ \str -> 
-            let jl = fromString xs :: JoinList (Score, Size) String
+            let jl     = fromString xs :: JoinList (Score, Size) String
                 sizeJl = numLines jl
-            in forAll (genScopedInt (\x -> (x >= 0 && x < sizeJl) || x == 0 && sizeJl == 0)) $ \i ->
+                pred x = (x >= 0 && x < sizeJl) || (x == 0 && sizeJl == 0)
+            in forAll (suchThat arbitrary pred) $ \i ->
               let jl2 = replaceLine i str jl
-                  jl3 = replaceLine i str jl2
+                  jl3 = replaceLine i str . replaceLine i str $ jl
               in jl2 == jl3
 
-      it "replaceLine with a new line then replaceLine with the original line \
-         \ gives the original JoinList" $ do
+      it "`replaceLine i oldStr . replaceLine i newStr $ jl == jl`" $ do
         --pending
         property $ 
-          forAll genSafeStrings $ \xs -> 
-          forAll genSafeString $ \str -> 
+          forAll genSafeStringsWithBreaks $ \xs -> 
+          forAll genSafeString $ \newStr -> 
             let jl = fromString xs :: JoinList (Score, Size) String
                 sizeJl = numLines jl
-            in forAll (genScopedInt (\x -> (x >= 0 && x < sizeJl) || x == 0 && sizeJl == 0)) $ \i ->
-              let jl2 = replaceLine i str jl
-                  str' = fold $ line i jl
-                  jl3 = replaceLine i str' jl2
-              in jl3 == jl
+                pred x = (x >= 0 && x < sizeJl) || (x == 0 && sizeJl == 0)
+            in forAll (suchThat arbitrary pred) $ \i ->
+              let oldStr = fold $ line i jl
+              in jl == (replaceLine i oldStr . replaceLine i newStr $ jl)
 
     describe "fromString" $ do
       it "converts a string to a JoinList" $ do
