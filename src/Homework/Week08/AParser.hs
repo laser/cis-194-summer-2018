@@ -7,7 +7,7 @@ module Homework.Week08.AParser (
 
 import Data.Char
 
-newtype Parser a = Parser { runParser :: String -> Maybe (a, String) }
+newtype Parser a = Parser { runParser :: (->) String (Maybe (a, String)) }
 
 satisfy :: (Char -> Bool) -> Parser Char
 satisfy p = Parser f

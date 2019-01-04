@@ -1,3 +1,5 @@
+{-# LANGUAGE InstanceSigs #-}
+
 module Homework.Week08.Assignment (
   first,
   abParser,
@@ -11,11 +13,19 @@ import Control.Applicative
 
 -- #1
 first :: (a -> b) -> (a,c) -> (b,c)
-first = undefined
+first f (x,y) = (f x, y) 
 
 instance Functor Parser where
-  fmap = undefined
-
+  fmap :: (a -> b) -> Parser a -> Parser b
+  fmap g pa = answer
+            where 
+              answer = Parser $ step1
+              --step1 :: ((->) String (Maybe (b, String))) Bad type annotation!
+              step1 = step2 g $ runParser pa  
+              step2 :: (a -> b) -> ((->) String (Maybe (a, String))) -> ((->) String (Maybe (b, String)))
+              step2 f r = fmap (step1a2 f) r 
+              step1a2 :: (a -> b) -> Maybe (a, String) -> Maybe (b, String)
+              step1a2 f m = fmap (first f) m 
 -- #2
 instance Applicative Parser where
   pure = undefined
