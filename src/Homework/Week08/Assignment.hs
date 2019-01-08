@@ -10,6 +10,7 @@ module Homework.Week08.Assignment (
 
 import Homework.Week08.AParser
 import Control.Applicative
+import Data.Char
 
 -- #1
 first :: (a -> b) -> (a,c) -> (b,c)
@@ -73,4 +74,16 @@ instance Alternative Parser where
 
 -- #5
 intOrUppercase :: Parser ()
-intOrUppercase = undefined
+intOrUppercase = parser1 <|> parser2
+
+-- You can factor these two function out
+
+parser1 :: Parser ()
+parser1 = Parser $ \s -> case (runParser posInt) s of
+                          Nothing -> Nothing
+                          Just (v, rest) -> Just ((), rest) 
+
+parser2 :: Parser ()
+parser2 = Parser $ \s -> case (runParser (satisfy isUpper)) s of
+                          Nothing -> Nothing
+                          Just (v, rest) -> Just ((), rest) 
