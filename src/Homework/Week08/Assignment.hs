@@ -66,8 +66,10 @@ intPair = (\x _ z -> [x, z]) <$> posInt <*> parseSpace <*> posInt
 
 -- #4
 instance Alternative Parser where
-  empty = undefined
-  _ <|> _ = undefined
+  empty = Parser $ \s -> Nothing
+  p1 <|> p2 = Parser $ \s -> case runParser p1 $ s of
+                              Nothing -> runParser p2 $ s
+                              Just (v,rest) -> Just (v,rest)
 
 -- #5
 intOrUppercase :: Parser ()
