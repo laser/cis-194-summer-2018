@@ -26,20 +26,43 @@ instance Functor Parser where
               step2 f r = fmap (step1a2 f) r 
               step1a2 :: (a -> b) -> Maybe (a, String) -> Maybe (b, String)
               step1a2 f m = fmap (first f) m 
+
 -- #2
 instance Applicative Parser where
-  pure = undefined
-  _ <*> _ = undefined
+  pure x = Parser $ \s -> Just (x, s)
+  (<*>) :: Parser (a -> b) -> Parser a -> Parser b
+  p1 <*> p2 = Parser $ myFunc
+            where
+              -- ! These are bad type annotations ! Don't rely on type annotations so much !
+              -- myFunc :: String -> Maybe (b, String) 
+              myFunc s = case (runParser p1 $ s) of
+                           Nothing -> Nothing
+                           (Just (ab, rest)) -> secondRun (ab, rest)
+              -- secondRun :: ((a -> b), String) -> Maybe (b, String)
+              secondRun (f, string) = case (runParser p2 $ string) of
+                                        Nothing -> Nothing
+                                        (Just (v, rest)) -> Just (f v, rest)
 
 -- #3
+
+-- Parser (Char, Char) :: String -> ((Char, Char), String)
 abParser :: Parser (Char, Char)
-abParser = undefined
+abParser = (,) <$> parseA <*> parseB
+
+parseA :: Parser Char
+parseA = (char 'a')
+
+parseB :: Parser Char
+parseB = (char 'b')
 
 abParser_ :: Parser ()
-abParser_ = undefined
+abParser_ = (\x y -> ()) <$> parseA <*> parseB
+
+parseSpace :: Parser Char
+parseSpace = (char ' ')
 
 intPair :: Parser [Integer]
-intPair = undefined
+intPair = (\x _ z -> [x, z]) <$> posInt <*> parseSpace <*> posInt
 
 -- #4
 instance Alternative Parser where
